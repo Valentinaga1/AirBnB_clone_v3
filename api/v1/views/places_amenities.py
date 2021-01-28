@@ -16,13 +16,16 @@ def get_amenities_relation(place_id):
     """Show a review of a place"""
     amenities_list = []
     places_to_search = storage.get(Place, place_id)
-    print(places_to_search)
     if places_to_search is None:
         abort(404)
-    for amenitie in places_to_search.amenities:
-        amenities_list.append(amenitie.to_dict())
-    return jsonify(amenities_list)
-
+    if storage_t == 'db':
+        for amenitie in places_to_search.amenities:
+            amenities_list.append(amenitie.to_dict())
+        return jsonify(amenities_list)
+    else:
+        for amenitie in places_to_search.amenity_ids:
+            amenities_list.append(amenitie.to_dict())
+        return jsonify(amenities_list)
 
 @app_views.route("/<place_id>/amenities/<amenity_id>",
                  strict_slashes=False, methods=["DELETE"])
