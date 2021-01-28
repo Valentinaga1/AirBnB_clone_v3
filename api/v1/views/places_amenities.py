@@ -79,6 +79,6 @@ def create_amenities_relation(place_id, amenity_id):
         if amenities_to_search in amenity_place_asig:
             return amenity_id, 200
         else:
-            amenity_place_asig.append(amenity_id)
+            amenity_place_asig = amenity_id
             storage.save()
             return amenity_id, 201
