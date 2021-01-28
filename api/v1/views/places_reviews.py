@@ -50,7 +50,6 @@ def delete_review(review_id):
 def create_review(place_id):
     """ create a review of an specific place id"""
     places_to_search = storage.get(Place, place_id)
-    print(places_to_search)
     if places_to_search is None:
         abort(404)
     post_data = request.get_json()
