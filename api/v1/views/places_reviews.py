@@ -55,11 +55,13 @@ def create_review(place_id):
     post_data = request.get_json()
     if post_data is None:
         abort(400, "Not a JSON")
-    user_verif = storage.get(User, post_data.get("user_id"))
-    if user_verif is None:
-        abort(400, "Missing user_id")
     if 'text' not in post_data.keys():
         abort(400, "Missing text")
+    if 'user_id' not in post_data.keys():
+        abort(400, "Missing user_id")
+    user_verif = storage.get(User, post_data.get("user_id"))
+    if user_verif is None:
+        abort(404)
     new_instance_review = Review(place_id=place_id, **post_data)
     new_instance_review.save()
     return (jsonify(new_instance_review.to_dict()), 201)
