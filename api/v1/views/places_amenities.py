@@ -28,7 +28,7 @@ def get_amenities_relation(place_id):
         return jsonify(amenities_list)
 
 
-@app_views.route("/<place_id>/amenities/<amenity_id>",
+@app_views.route("/places/<place_id>/amenities/<amenity_id>",
                  strict_slashes=False, methods=["DELETE"])
 def delete_amenities_relation(place_id, amenity_id):
     """Delete one review"""
