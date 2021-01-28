@@ -62,7 +62,6 @@ def create_amenities_relation(place_id, amenity_id):
     # print(amenities_to_search)
     if places_to_search is None or amenities_to_search is None:
         abort(404)
-    # revisar place_to_search.id validation (404)
     if storage_t == 'db':
         amenity_place_asig = places_to_search.amenities
         if amenities_to_search in amenity_place_asig:
@@ -74,8 +73,8 @@ def create_amenities_relation(place_id, amenity_id):
     else:
         amenity_place_asig = places_to_search.amenity_ids
         if amenities_to_search in amenity_place_asig:
-            return jsonify(amenities_to_search.to_dict()), 200
+            return amenity_id, 200
         else:
             amenity_place_asig.append(amenity_id)
             places_to_search.save()
-            return jsonify(amenities_to_search.to_dict()), 201
+            return amenity_id, 201
