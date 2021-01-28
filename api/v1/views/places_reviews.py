@@ -58,12 +58,12 @@ def create_review(place_id):
     user_verif = storage.get(User, post_data.get("user_id"))
     if 'user_id' not in post_data:
         abort(400, "Missing user_id")
-    if user_verif is None:
+    if storage.get(User, user_id) is None:
         abort(404)
     if 'text' not in post_data:
         abort(400, "Missing text")
-    post_data["place_id"] = place_id
     new_instance_review = Review(**post_data)
+    new_instance_review.place_id = place_id
     new_instance_review.save()
     return (jsonify(new_instance_review.to_dict()), 201)
 
