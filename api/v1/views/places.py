@@ -48,24 +48,23 @@ def delete_place(city_id):
 @app_views.route("/cities/<city_id>/places", strict_slashes=False,
                  methods=["POST"])
 def create_place(city_id):
-    """ create a citplacey by an specific city id"""
+    """ create a place of an specific city id"""
     places_to_search = storage.get(City, city_id)
     if places_to_search is None:
         abort(404)
     post_data = request.get_json()
     if post_data is None:
         abort(400, "Not a JSON")
-    user_verif = storage.get(User, post_data.get("user_id"))
-    if 'user_id' not in post_data:
-        abort(400, "Missing user_id")
-    if user_verif is None:
-        abort(404)
-    if 'name' not in post_data:
+    if 'name' not in post_data.keys():
         abort(400, "Missing name")
-    post_data["city_id"] = city_id
-    new_instance_place = Place(**post_data)
-    new_instance_place.save()
-    return (jsonify(new_instance_place.to_dict()), 201)
+    if 'user_id' not in post_data.keys():
+        abort(400, "Missing user_id")
+    user_verif = storage.get(User, post_data.get("user_id"))
+    if city_verif is None:
+        abort(404)
+    new_instance_review = Place(city_id=city_id, **post_data)
+    new_instance_review.save()
+    return (jsonify(new_instance_review.to_dict()), 201)
 
 
 @app_views.route("/places/<place_id>", strict_slashes=False,
