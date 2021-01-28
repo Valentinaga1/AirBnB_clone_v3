@@ -81,5 +81,5 @@ def update_place(place_id):
         if key != "id" and key != "city_id" and key != "user_id"\
            and key != "created_at" and key != "updated_at":
             setattr(places_to_search, key, value)
-    city_to_search.save()
+    places_to_search.save()
     return (jsonify(places_to_search.to_dict()), 200)
