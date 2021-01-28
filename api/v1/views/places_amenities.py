@@ -24,8 +24,9 @@ def get_amenities_relation(place_id):
         return jsonify(amenities_list)
     else:
         for amenitie in places_to_search.amenity_ids:
-            amenities_list.append(amenitie.to_dict())
+            amenities_list.append(amenitie)
         return jsonify(amenities_list)
+
 
 @app_views.route("/<place_id>/amenities/<amenity_id>",
                  strict_slashes=False, methods=["DELETE"])
@@ -51,7 +52,7 @@ def delete_amenities_relation(place_id, amenity_id):
             abort(404)
         else:
             amenity_place_asig.remove(amenity_id)
-            places_to_search.save()
+            storage.save()
             return jsonify({}), 200
 
 
@@ -79,5 +80,5 @@ def create_amenities_relation(place_id, amenity_id):
             return amenity_id, 200
         else:
             amenity_place_asig.append(amenity_id)
-            places_to_search.save()
+            storage.save()
             return amenity_id, 201
