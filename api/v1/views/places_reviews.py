@@ -74,16 +74,13 @@ def create_review(place_id):
 def update_review(review_id):
     """ update a review for an specific id"""
     review_to_search = storage.get(Review, review_id)
-    print(review_to_search)
-    print("hello")
     if review_to_search is None:
         abort(404)
     post_data = request.get_json()
-    print(post_data)
     if post_data is None:
         abort(400, "Not a JSON")
     for key, value in post_data.items():
-        if key != "id" and key != "user_id" and key != "user_id"\
+        if key != "id" and key != "user_id" and key != "place_id"\
            and key != "created_at" and key != "updated_at":
             setattr(review_to_search, key, value)
     review_to_search.save()
