@@ -69,9 +69,9 @@ def create_place(city_id):
 
 @app_views.route("/places/<place_id>", strict_slashes=False,
                  methods=["PUT"])
-def update_place(city_id):
+def update_place(place_id):
     """ update a place for an specific id"""
-    places_to_search = storage.get(Place, city_id)
+    places_to_search = storage.get(Place, place_id)
     if places_to_search is None:
         abort(404)
     post_data = request.get_json()
