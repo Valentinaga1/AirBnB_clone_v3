@@ -50,7 +50,6 @@ def delete_place(city_id):
 def create_place(city_id):
     """ create a citplacey by an specific city id"""
     places_to_search = storage.get(City, city_id)
-    print(places_to_search)
     if places_to_search is None:
         abort(404)
     post_data = request.get_json()
@@ -80,7 +79,8 @@ def update_place(city_id):
     if post_data is None:
         abort(400, "Not a JSON")
     for key, value in post_data.items():
-        if key != "id" and key != "created_at" and key != "updated_at":
+        if key != "id" and key != "city_id" and key != "user_id"\
+           and key != "created_at" and key != "updated_at":
             setattr(places_to_search, key, value)
     city_to_search.save()
     return (jsonify(places_to_search.to_dict()), 200)
