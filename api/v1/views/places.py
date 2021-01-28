@@ -55,12 +55,12 @@ def create_place(city_id):
     post_data = request.get_json()
     if post_data is None:
         abort(400, "Not a JSON")
-    if 'name' not in post_data.keys():
-        abort(400, "Missing name")
     if 'user_id' not in post_data.keys():
         abort(400, "Missing user_id")
+    if 'name' not in post_data.keys():
+        abort(400, "Missing name")
     user_verif = storage.get(User, post_data.get("user_id"))
-    if city_verif is None:
+    if user_verif is None:
         abort(404)
     new_instance_review = Place(city_id=city_id, **post_data)
     new_instance_review.save()
